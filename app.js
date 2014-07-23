@@ -1,10 +1,9 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
-
 var Stat = require('./models/stat');
-
 var app = express();
+
 app.use( bodyParser() );
 mongoose.set('debug', true);
 mongoose.connect('mongodb://localhost:27017/performance');
@@ -34,7 +33,6 @@ app.post('/stats/delete', function( req, res){
   });
 });
 
-
 app.post('/stats/new', function( req, res ){
   var stat = new Stat();  
   stat.name = req.body.name;
@@ -44,6 +42,3 @@ app.post('/stats/new', function( req, res ){
 });
 
 app.listen( 3000 );
-
-
-

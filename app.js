@@ -16,6 +16,10 @@ app.get('/', function( req, res){
   });
 });
 
+app.get('/stats/new', function( req, res ){
+  res.render('new' , {data: "hey"} );
+});
+
 app.get('/stats/:id', function( req, res){
   Stat.findById( req.params.id, function( err, stat){
     res.render('show', { stat: stat });
@@ -33,9 +37,9 @@ app.post('/stats/delete', function( req, res){
 
 app.post('/stats/new', function( req, res ){
   var stat = new Stat();  
-  stat.name = "so freakin cool";
+  stat.name = req.body.name;
   stat.save( function (err){
-    res.json({ message: 'Beer added to the locker!', data: stat });
+    res.redirect('/');
   });
 });
 

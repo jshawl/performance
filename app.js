@@ -5,6 +5,7 @@ var Stat = require('./models/stat');
 var app = express();
 
 app.use( bodyParser() );
+app.use( express.static('public') );
 mongoose.set('debug', true);
 mongoose.connect('mongodb://localhost:27017/performance');
 app.set('view engine', 'ejs');
@@ -29,7 +30,7 @@ app.post('/stats/delete', function( req, res){
   console.log( req.body );
   Stat.remove( {_id: req.body.id}, function( err, stat){
     if ( err ) console.log( err );
-    res.json('Stat deleted!');
+    res.redirect('/');
   });
 });
 
@@ -37,7 +38,8 @@ app.post('/stats/new', function( req, res ){
   var stat = new Stat();  
   stat.name = req.body.name;
   stat.save( function (err){
-    res.redirect('/');
+    if ( err ) console.log( err );
+    res.json('stat saved!');
   });
 });
 
